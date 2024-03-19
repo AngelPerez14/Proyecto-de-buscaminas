@@ -1,3 +1,4 @@
+//Angel perez e Ivan perez
 
 constantes
   facilN = 8; 
@@ -47,7 +48,7 @@ inicio
       para j de y - 1 hasta y + 1 hacer
         si (i en [1..N]) y (j in [1..N]) y (T[i, j] <> 9) entonces
           T[i, j] := T[i, j] + 1;
-  finpara
+  finpara;
 finprocedimiento;
 
 
@@ -67,9 +68,9 @@ inicio
         escribir('* ') 
       sino
         escribir(T[i, j], ' '); 
-    finpara
+    finpara;
     escribir;
-  finpara
+  finpara;
 finprocedimiento;
 
 
@@ -126,7 +127,7 @@ inicio
   limpiarPantalla;
   
   repetir
-    // Menú de selección de nivel de dificultad
+    
     escribir('Seleccione el nivel de dificultad:');
     escribir('1. Fácil');
     escribir('2. Medio');
@@ -157,7 +158,7 @@ inicio
     FinJuego := falso;
     mientras no FinJuego hacer
     inicio
-      // Comenzar el juego
+     
       jugar(i, facilM);
     fin;
 
