@@ -1,0 +1,167 @@
+
+constantes
+  facilN = 8; 
+  facilM = 10; 
+
+  medioN = 16;
+  medioM = 40;
+
+  dificilN = 24;
+  dificilM = 99;
+
+
+tipo
+  tablero = arreglo[1..dificilN, 1..dificilN] de entero;
+  estadoCelda = arreglo[1..dificilN, 1..dificilN] de booleano;
+
+
+variables
+  T: tablero;
+  E: estadoCelda;
+  i, j, k, x, y: entero;
+  fila, columna: entero;
+  FinJuego: booleano;
+  nombre: cadena;
+
+
+procedimiento inicializarTablero(N, M: entero);
+inicio
+  aleatorio;
+ 
+  para i de 1 hasta N hacer
+    para j de 1 hasta N hacer
+      T[i, j] := 0;
+
+  
+  inicio
+    repetir
+      x := aleatorio(N) + 1;
+      y := aleatorio(N) + 1;
+    hasta T[x, y] = 0;
+
+    
+    T[x, y] := 9;
+	
+    
+    para i de x - 1 hasta x + 1 hacer
+      para j de y - 1 hasta y + 1 hacer
+        si (i en [1..N]) y (j in [1..N]) y (T[i, j] <> 9) entonces
+          T[i, j] := T[i, j] + 1;
+  finpara
+finprocedimiento;
+
+
+procedimiento mostrarTablero(N: entero);
+inicio
+  limpiarPantalla;
+
+  escribir('Jugador: ', nombre);
+  
+  para i de 1 hasta N hacer
+  inicio
+    para j de 1 hasta N hacer
+    inicio
+      si no E[i, j] entonces
+        escribir('X ') 
+      sino si T[i, j] = 9 entonces
+        escribir('* ') 
+      sino
+        escribir(T[i, j], ' '); 
+    finpara
+    escribir;
+  finpara
+finprocedimiento;
+
+
+procedimiento jugar(N, M: entero);
+var
+  opcion: caracter;
+inicio
+  mostrarTablero(N);
+  escribir;
+  escribir('Introduce la fila y la columna que quieres revelar:');
+  leer(fila, columna);
+  si (fila in [1..N]) y (columna in [1..N]) entonces
+  inicio
+ 
+    E[fila, columna] := verdadero;
+    si T[fila, columna] = 9 entonces 
+    inicio
+      escribir('Has perdido Encontraste una mina.');
+   
+      repetir
+        escribir('Quieres volver a intentarlo? (1 = Sí, 0 = No)');
+        leer(opcion);
+      hasta (opcion = '1') o (opcion = '0');
+
+      si opcion = '0' entonces
+        FinJuego := verdadero
+      sino
+      inicio
+       
+        inicializarTablero(N, M);
+        para i de 1 hasta N hacer
+          para j de 1 hasta N hacer
+            E[i, j] := falso;
+        FinJuego := falso;
+      fin;
+    fin
+    sino
+    inicio
+      escribir('Has revelado la celda ', fila, ',', columna, ' que tiene ', T[fila, columna], ' minas adyacentes.');
+    fin;
+  fin
+  sino
+  inicio
+    escribir('Introduce una fila y una columna válida.');
+  fin;
+  leerln;
+finprocedimiento;
+
+
+inicio
+
+  escribir('Ingrese su nick de jugador:');
+  leer(nombre);
+  limpiarPantalla;
+  
+  repetir
+    // Menú de selección de nivel de dificultad
+    escribir('Seleccione el nivel de dificultad:');
+    escribir('1. Fácil');
+    escribir('2. Medio');
+    escribir('3. Difícil');
+    leer(i);
+
+   
+    caso i de
+      1: inicio
+           inicializarTablero(facilN, facilM);
+           mostrarTablero(facilN);
+         fin;
+      2: inicio
+           inicializarTablero(medioN, medioM);
+           mostrarTablero(medioN);
+         fin;
+      3: inicio
+           inicializarTablero(dificilN, dificilM);
+           mostrarTablero(dificilN);
+         fin;
+    sino
+      inicio
+        escribir('Opcion invalida.');
+        continuar;
+      fin;
+    fincaso;
+
+    FinJuego := falso;
+    mientras no FinJuego hacer
+    inicio
+      // Comenzar el juego
+      jugar(i, facilM);
+    fin;
+
+  hasta FinJuego;
+  
+  escribir('¡Gracias por jugar!');
+fin.
