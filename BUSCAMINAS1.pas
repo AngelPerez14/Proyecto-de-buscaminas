@@ -1,3 +1,4 @@
+// Angel perez 30.209.584 Ivan perez 30.539.529
 program Buscaminas;
 uses crt;
 
